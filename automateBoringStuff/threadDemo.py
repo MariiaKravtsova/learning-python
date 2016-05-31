@@ -5,11 +5,11 @@ while datetime.datetime.now() < startTime:
     time.sleep(1)
 
 print('Program now starting on Halloween 2029')
-
-print('Run')
-def pause():
-    time.sleep(3)
-    print('Resume')
-threadObj = threading.Thread(target=pause)
-threadObj.start()
-print('Stop')
+#
+# print('Run')
+# def pause():
+#     time.sleep(3)
+#     print('Resume')
+# threadObj = threading.Thread(target=pause)
+# threadObj.start()
+# print('Stop')
