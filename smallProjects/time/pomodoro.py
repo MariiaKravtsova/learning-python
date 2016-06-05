@@ -1,12 +1,19 @@
-import datetime
+import time, webbrowser
 
 print('How long are you styding for?')
-study = int(input())
-now = datetime.datetime.now()
+study = int(input()) * 60
 print('How long is your break?')
-pause = input()
+pause = int(input()) * 60
 
 while study > 0:
-    studyTime = datetime.datetime.now().time.minute(study) - datetime.datetime.now()
+    time.sleep(1)
+    study = study - 1
+    print(study)
 
-print(studyTime)
+webbrowser.open('https://www.youtube.com/watch?v=c6rP-YP4c5I')
+
+while pause > 0:
+    time.sleep(1)
+    pause = pause - 1
+
+webbrowser.open('https://trello.com/b/INnUpB2g/weekly')
