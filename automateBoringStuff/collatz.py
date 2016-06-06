@@ -9,3 +9,7 @@ def collatz(number):
 print('Enter your number:')
 userNumber = int(input())
 collatz(userNumber)
+
+def some(a, b):
+    print(a * b)
+some(4,5)
