@@ -1,4 +1,4 @@
 import datetime
-countTo = datetime.datetime(2016, 6, 30, 6, 30, 30)
+countTo = datetime.datetime(2017, 12, 17, 00, 00, 00)
 graduationIn = countTo - datetime.datetime.now()
-print(graduationIn)
+print('Days till graduation: ' + str(graduationIn))
