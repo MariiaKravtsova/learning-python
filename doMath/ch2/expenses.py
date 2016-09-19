@@ -1,6 +1,17 @@
 """ Visualizing my Expenses """
 
 import matplotlib.pyplot as plt
+import csv
+
+def process_csv():
+    with open('expenses.csv', newline='') as csvfile:
+        streamreader = csv.reader(csvfile, delimiter=',')
+        labels = []
+        values = []
+        for row in streamreader:
+            labels.append(row[0])
+            values.append(row[1])
+    draw_chart(labels, values)
 
 def draw_chart(labels, values):
     plt.pie(values, labels=labels, autopct='%1.1f%%')
@@ -9,13 +20,4 @@ def draw_chart(labels, values):
     plt.show()
 
 if __name__ == '__main__':
-    categories = int(input('Enter number of categories: '))
-    labels = []
-    values = []
-    while categories > 0:
-        label = input('Enter category: ')
-        labels.append(label)
-        value = float(input('Expenditure: '))
-        values.append(value)
-        categories = categories - 1
-    draw_chart(labels, values)
+    process_csv()
