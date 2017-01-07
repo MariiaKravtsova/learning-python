@@ -1,31 +1,38 @@
-import requests, bs4, os
+#!/usr/bin/env python3
 
-url = 'https://apod.nasa.gov/apod/'
+import requests
+import bs4
+import os
 
-os.makedirs('apod', exist_ok=True)
+def downloadImage(url, path):
+    try:
+        # setup
+        os.makedirs('apod', exist_ok=True)
 
-# TODO: some condition here to have a loop, today's date?
+        # get
+        res = requests.get(url)
+        res.raise_for_status()
 
-res = requests.get(url)
-res.raise_for_status()
+        # parse
+        soup = bs4.BeautifulSoup(res.text, "html.parser")
+        image_element = soup.findAll('img')[0].get('src')
 
-soup = bs4.BeautifulSoup(res.text, "html.parser")
+        # Get image url and download it
+        image_url = url + image_element
+        print('Downloading image: ', image_url)
+        res = requests.get(image_url)
+        res.raise_for_status
 
-imageElement = soup.findAll('img')[0].get('src')
+        # Saving the image into apod folder
+        with open(os.path.join('apod', os.path.basename(image_url)), 'wb') as f:
+            for chunk in res.iter_content(100000):
+                f.write(chunk)
 
-if imageElement == []:
-    print('No image found.')
-else:
-    # Get image url and download it
-    imageUrl = url + imageElement
-    print('Downloading image: ', imageUrl)
-    res = requests.get(imageUrl)
-    res.raise_for_status
-    print(res)
+        print('Done.')
+    except requests.exceptions.HTTPError as e:
+        print('Error: {}'.format(e.message))
+    except Exception as e:
+        print('Error: {}'.format(e.message))
 
-    # Saving the image into apod folder
-    imageFile = open(os.path.join('apod', os.path.basename(imageUrl)), 'wb')
-    for chunk in res.iter_content(100000):
-        imageFile.write(chunk)
-    imageFile.close()
-    print('Done.')
+if __name__=='__main__':
+    downloadImage('https://apod.nasa.gov/apod/', 'apod')
